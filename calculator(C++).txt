@@ -1,0 +1,130 @@
+#include <iostream>
+#include <cstring>
+#include <stack>
+#include <vector>
+
+using namespace std;
+//id: +!-5  -!-3  *!-6  /!-1 (!-8 )!-7
+string s;
+int c;
+bool b=1;
+int h=0;
+int helper;
+vector <int> input;
+vector <int> output;
+    vector <int> stak;
+    int a=0;
+void oper (int znak)
+{
+    if(znak==-5)// +
+    {
+        helper=*(output.end()-1);
+        output.pop_back();
+        helper=*(output.end()-1)+helper;
+        output.pop_back();
+        output.push_back(helper);
+    }
+    if(znak==-3)// -
+    {
+        helper=*(output.end()-1);
+        output.pop_back();
+        helper=*(output.end()-1)-helper;
+        output.pop_back();
+        output.push_back(helper);
+    }
+    if(znak==-6)// *
+    {
+        helper=*(output.end()-1);
+        output.pop_back();
+        helper=*(output.end()-1)*helper;
+        output.pop_back();
+        output.push_back(helper);
+    }
+    if(znak==-1)// /
+    {
+        helper=*(output.end()-1);
+        output.pop_back();
+        helper=*(output.end()-1)/helper;
+        output.pop_back();
+        output.push_back(helper);
+    }
+
+}
+void stoi(int pos)
+     {
+      if(pos<s.length())
+        {c=s[pos]-48;
+
+         if(c>-1)
+            h=h*10+c;
+         else
+         {
+             if(((h!=0)||(c>-8))&&(b==1))
+            input.push_back(h);
+            input.push_back(c);
+            h=0;
+
+            if(c==-7)
+                b=0;
+            else
+                b=1;
+         }
+        stoi(pos+1);
+        }
+        else
+        {if(*(input.end()-1)!=-7)
+             input.push_back(h);
+        }
+     }
+
+int main()
+{
+
+
+    cin>>s;
+    //PREC - perevod recurs
+     stoi(0);
+ //SSA - sorting station algorithm
+for(int i=0;i<input.size();i++)
+ {
+      if(input[i]>=0)
+      output.push_back(input[i]);
+
+      if((input[i]==-5)||(input[i]==-3))//nizkiy prior
+        {while((stak.size()>0)&&(*(stak.end()-1)!=-8))
+            {
+                oper(*(stak.end()-1));
+                stak.pop_back();
+            }
+            stak.push_back(input[i]);}
+
+       if((input[i]==-6)||(input[i]==-1))//visokiy prior
+          {while((stak.size()>0)&&(*(stak.end()-1)!=-3)&&(*(stak.end()-1)!=-5)&&(*(stak.end()-1)!=-8))
+            {
+                oper(*(stak.end()-1));
+                stak.pop_back();
+            }
+            stak.push_back(input[i]);}
+
+            if(input[i]==-8)//skobka otkr
+            stak.push_back(-8);
+            if(input[i]==-7)//skobka zakr
+            { while((stak.size()>0)&&(*(stak.end()-1)!=-8))
+            {
+
+                oper(*(stak.end()-1));
+                stak.pop_back();
+            }
+            stak.pop_back();
+            }
+
+
+
+      }
+
+      while(stak.size()>0)
+      {oper(*(stak.end()-1));
+      stak.pop_back();}
+            cout<<output[0];
+    return 0;
+}
