@@ -17,10 +17,10 @@ int token=0;
 
 
 
-void oper (int znak)
+void do_operation (int sign)
 {
  int helper;
-    if(znak==-5)// +
+    if(sign==-5)// +
     {
         helper=*(output.end()-1);
         output.pop_back();
@@ -28,7 +28,7 @@ void oper (int znak)
         output.pop_back();
         output.push_back(helper);
     }
-    if(znak==-3)// -
+    if(sign==-3)// -
     {
         helper=*(output.end()-1);
         output.pop_back();
@@ -36,7 +36,7 @@ void oper (int znak)
         output.pop_back();
         output.push_back(helper);
     }
-    if(znak==-6)// *
+    if(sign==-6)// *
     {
         helper=*(output.end()-1);
         output.pop_back();
@@ -44,7 +44,7 @@ void oper (int znak)
         output.pop_back();
         output.push_back(helper);
     }
-    if(znak==-1)// /
+    if(sign==-1)// /
     {
         helper=*(output.end()-1);
         output.pop_back();
@@ -57,7 +57,7 @@ void oper (int znak)
 
 
 
-void stoi(int pos)
+void string_to_input (int pos)
      {
 
         if(pos<vvod.length())
@@ -79,7 +79,7 @@ void stoi(int pos)
               else
                   b=1;
           }
-          stoi(pos+1);
+          string_to_input(pos+1);
         }
         else
         {if(*(input.end()-1)!=-7)
@@ -101,7 +101,7 @@ vvod="";
   vvod+=sprob[i];
 
  //PREC - perevod recurs
-  stoi(0);
+  string_to_input(0);
 
  //SSA - sorting station algorithm
  for(int i=0;i<input.size();i++)
@@ -114,7 +114,7 @@ vvod="";
         //nizkiy prior
         {while((stak.size()>0)&&(*(stak.end()-1)!=-8))
             {
-                oper(*(stak.end()-1));
+                do_operation(*(stak.end()-1));
                 stak.pop_back();
             }
             stak.push_back(input[i]);}
@@ -124,7 +124,7 @@ vvod="";
         //visokiy prior
           {while((stak.size()>0)&&(*(stak.end()-1)!=-3)&&(*(stak.end()-1)!=-5)&&(*(stak.end()-1)!=-8))
             {
-                oper(*(stak.end()-1));
+                do_operation(*(stak.end()-1));
                 stak.pop_back();
             }
             stak.push_back(input[i]);}
@@ -140,7 +140,7 @@ vvod="";
             {
              while((stak.size()>0)&&(*(stak.end()-1)!=-8))
                   {
-                oper(*(stak.end()-1));
+                do_operation(*(stak.end()-1));
                 stak.pop_back();
                   }
              stak.pop_back();
@@ -150,7 +150,7 @@ vvod="";
 
       while(stak.size()>0)
       {
-        oper(*(stak.end()-1));
+        do_operation(*(stak.end()-1));
         stak.pop_back();
       }
 
