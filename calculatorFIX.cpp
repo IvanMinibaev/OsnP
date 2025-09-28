@@ -92,13 +92,14 @@ void string_to_input (int pos)
 int main()
 {
 
-string sprob;
-getline(cin,sprob);
+string sWithSpaces;
+getline(cin, sWithSpaces);
+//scanf("%s", &sWithSpaces);
 vvod="";
 
- for(int i=0;i<sprob.length();i++)
- if(sprob[i]!=' ')
-  vvod+=sprob[i];
+ for(int i=0;i<sWithSpaces.length();i++)
+ if(sWithSpaces[i]!=' ')
+  vvod+=sWithSpaces[i];
 
  //PREC - perevod recurs
   string_to_input(0);
@@ -154,6 +155,8 @@ vvod="";
         stak.pop_back();
       }
 
+//printf("%d", output[0]);
 cout<<output[0];
+
 return 0;
 }
